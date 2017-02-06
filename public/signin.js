@@ -1,6 +1,5 @@
 {
-  const form = document.forms.namedItem('signin')
-  // const login = document.querySelector('form[name=signin]')
+  const form = document.querySelector('form[name=signin]')
   const pre = document.getElementById('out')
 
   const log = (res) => {
@@ -13,14 +12,14 @@
 
   form.addEventListener('submit', (e) => {
     e.preventDefault()
-    const login = new FormData(form)
+
     fetch('/token', {
       method: 'POST',
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
       body: JSON.stringify({
-    		user: login.get('user'),
-    		password: login.get('password'),
-    		keep: login.get('keep') == 'on'
+        user: form.querySelector('[name=user]').value,
+        password: form.querySelector('[name=password]').value,
+        keep: form.querySelector('[name=keep]').value == 'on'
     	})
     })
     .then(res => {
