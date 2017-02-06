@@ -1,0 +1,107 @@
+<!doctype html>
+<meta charset="utf-8">
+<title></title>
+<link rel=stylesheet href="styles.css">
+
+<h1>JWT on now</h1>
+<a href="https://github.com/thisconnect/jwt-example">
+  https://github.com/thisconnect/jwt-example
+</a>
+<h3>token and expires from sessionStorage</h3>
+<pre id=tok></pre>
+
+<h2>1. sign in <code>/token</code></h2>
+you get a token that expires in 60 seconds :)<br>
+<span class=detail>
+  reload this page to see time remaining
+</span>
+<pre id=out></pre>
+
+<form name=signin method=post>
+  <!--  enctype="multipart/form-data" -->
+  <label>
+    <input type=text name=user placeholder="Username"> (demo: user)
+  </label>
+  <label>
+    <input type=password name=password placeholder="Password"> (demo: password)
+  </label>
+  <label>
+    <input type=checkbox name=keep checked>
+    keep me signed in,
+    <span class=detail>
+      NOT IMPLEMENTED YET (use localStorage instead of sessionStorage?)
+    </span>
+  </label>
+  <button type=submit>sign in</button>
+</form>
+
+<h2>2. get data <code>/api/private</code></h2>
+(/api/private deliberately accepts GET requests for testing,
+token sent with 'x-access-token' header)
+
+<pre id=out2></pre>
+<button id=getprivate>GET /api/private</button>
+
+<script>
+{
+  const pre = document.querySelector('#tok')
+  const token = sessionStorage.getItem('token')
+  const expires = sessionStorage.getItem('expires')
+  pre.textContent = token || 'no token'
+
+  if (expires){
+    pre.textContent += `
+
+expires on ${new Date(expires * 1000)}
+time remaining ${Math.floor(expires - (Date.now() * 0.001))}s
+  `
+    }
+  }
+</script>
+
+<h2>3. test token in sessionStorage</h2>
+
+<ul>
+  <li>
+    test a normal
+    <a href="/">anchor href="/""</a>
+    <ul>
+      <li>normal-left-click (SHOULD BE SAME TOKEN)</li>
+      <li>ctrl-left-click (SHOULD BE SAME TOKEN)</li>
+      <li>right-click-menu-open-link-in-new-tab (TOKEN SHOULD BE LOST)</li>
+    </ul>
+  </li>
+  <li>
+    <a href="/" target="_blank">anchor href="/" target="_blank"</a> (SHOULD BE SAME TOKEN)
+  </li>
+  <li>
+    <a href="javascript:open('/')">javascript:open('/')</a> (SHOULD BE SAME TOKEN)
+  </li>
+  <li>
+    use a bookmark or copy paste <code id=thisurl></code>
+    <script>document.getElementById('thisurl').textContent = location.href</script>
+    into a new tab
+  </li>
+  <li>
+    <a href="/" target="_blank" rel="noopener noreferrer">
+      anchor href="/" target="_blank" rel="noopener noreferrer"
+    </a> (NOT SURE)<br>
+    read more:<br>
+    <ul>
+      <li>
+        <a href="https://jakearchibald.com/2016/performance-benefits-of-rel-noopener/">
+          https://jakearchibald.com/2016/performance-benefits-of-rel-noopener/
+        </a>
+      </li>
+      <li>
+        <a href="https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/">
+          https://www.jitbit.com/alexblog/256-targetblank---the-most-underestimated-vulnerability-ever/
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+
+<script src="signin.js"></script>
+<script src="private.js"></script>
