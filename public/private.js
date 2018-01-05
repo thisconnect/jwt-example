@@ -3,10 +3,10 @@
 
   const log = (res) => {
     pre.textContent = `
-      ${res.status} ${res.statusText}
-      ${res.headers.get('content-type')}
-      ${res.url}
-    `
+${res.status} ${res.statusText}
+${res.headers.get('content-type')}
+${res.url}
+`
   }
 
   document.querySelector('#getprivate')
@@ -22,7 +22,7 @@
     .then(res => {
       log(res)
       if (res.status >= 400){
-        
+
       }
       return res.json()
     })
