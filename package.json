@@ -1,6 +1,6 @@
 {
   "name": "jwt-example",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "description": "testing JWT on now",
   "main": "server.js",
   "scripts": {
