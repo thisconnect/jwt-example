@@ -15,7 +15,7 @@ app.post('/token', parser.json(), (req, res, next) => {
     return res.status(401).send({ error: 'authentication failed' }).end()
   }
 
-  const expires = Math.floor(Date.now() / 1000) + (60)
+  const expires = Math.floor(Date.now() / 1000) + (60) // 60s
 
   new Promise((resolve, reject) => {
     jwt.sign({
@@ -55,7 +55,7 @@ app.get('/api/private', (req, res, next) => {
   const token = (body && body.access_token) || headers['x-access-token']
 
   new Promise((resolve, reject) => {
-    jwt.verify(token, SECRET, function(err, decoded) {
+    jwt.verify(token, SECRET, (err, decoded) => {
       if (err){
         return reject(err)
       }
